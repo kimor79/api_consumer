@@ -1,0 +1,11 @@
+A simple consumer of ApiProducer output.
+
+$client = new ApiConsumer();
+
+$details = $client->details('v1/some/path.php', array(
+	'post' => array('foo' => 'bar')
+);
+
+if(!is_array($details)) {
+	echo $client->message() . "\n";
+}
