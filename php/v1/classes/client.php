@@ -65,6 +65,23 @@ class ApiConsumer {
 			$this->options['base_uri'] .= sprintf("://%s",
 				$_SERVER['SERVER_NAME']);
 		}
+
+		if(array_key_exists('cookies', $this->options)) {
+			$cookies = array();
+
+			$keys = explode(',', $this->options['cookies']);
+			foreach($keys as $key) {
+				if(array_key_exists($key, $_COOKIE)) {
+					$cookies[] = sprintf("%s=%s", $key,
+						$_COOKIE[$key]);
+				}
+			}
+
+			if(!empty($cookies)) {
+				$this->curl_opts[CURLOPT_COOKIE] = implode(',',
+					$cookies);
+			}
+		}
 	}
 
 	public function __deconstruct() {
