@@ -225,12 +225,12 @@ class ApiConsumer {
 						$key, rawurlencode($t_value));
 				}
 			} else {
-				$data[] = sprintf("%s=%s", $key,
+				$output[] = sprintf("%s=%s", $key,
 					rawurlencode($value));
 			}
 		}
 
-		return $data;
+		return $output;
 	}
 }
 
