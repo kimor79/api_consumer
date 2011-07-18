@@ -147,8 +147,9 @@ class ApiConsumer {
 			if($options['json_post']) {
 				$post = json_encode($options['post']);
 			} else {
-				$post = $this->_recursiveRawURLEncode(
-					$options['post']);
+				$post = implode('&',
+					$this->_recursiveRawURLEncode(
+					$options['post']));
 			}
 		}
 
