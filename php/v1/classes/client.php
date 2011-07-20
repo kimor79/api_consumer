@@ -66,6 +66,11 @@ class ApiConsumer {
 				$_SERVER['SERVER_NAME']);
 		}
 
+		if($this->options['base_path']) {
+			$this->options['base_uri'] .= sprintf("/%s",
+				trim($this->options['base_path']));
+		}
+
 		if(array_key_exists('cookies', $this->options)) {
 			$cookies = array();
 
