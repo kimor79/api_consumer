@@ -77,9 +77,71 @@ class APIConsumerV2 {
 					$cookies);
 			}
 		}
+
+		if(!array_key_exists('base_url', $this->options)) {
+			$this->options['base_url'] = $this->buildSelfURL();
+		}
+
+		$this->options['base_urn'] = $this->buildURN();
+		$this->options['base_uri'] = $this->buildURI();
 	}
 
 	public function __deconstruct() {
+	}
+
+	/**
+	 * Build a base URL pointing to one's self
+	 * @return string
+	 */
+	protected function buildSelfURL() {
+		$host = '';
+		$scheme = 'http';
+		$port = '';
+
+		if(array_key_exists('HTTP_HOST', $_SERVER)) {
+			$host = $_SERVER['HTTP_HOST'];
+		} else {
+			$host = $_SERVER['SERVER_NAME'];
+		}
+
+		if(array_key_exists('HTTPS', $_SERVER) &&
+				$_SERVER['HTTPS'] === 'on') {
+			$scheme .= 's';
+		}
+
+		if(array_key_exists('SERVER_PORT', $_SERVER) &&
+				$_SERVER['SERVER_PORT'] != 80 &&
+				$_SERVER['SERVER_PORT'] != 443) {
+			$port = ':' . $_SERVER['SERVER_PORT'];
+		}
+
+		return sprintf("%s://%s%s/", $scheme, $host, $port);
+	}
+
+	protected function buildURI() {
+		if(array_key_exists('base_uri', $this->options)) {
+			return $this->options['base_uri'];
+		}
+
+		return sprintf("%s/%s/",
+			rtrim($this->options['base_url'], '/'),
+			trim($this->options['base_urn'], '/'));
+	}
+
+	protected function buildURN() {
+		$base_urn = '/';
+
+		if(array_key_exists('base_urn', $this->options)) {
+			$base_urn = trim($this->options['base_urn'], '/');
+		}
+
+		if($base_urn === '') {
+			$base_urn = '/';
+		} else {
+			$base_urn = sprintf("/%s/", $base_urn);
+		}
+
+		return $base_urn;
 	}
 
 	/**
