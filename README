@@ -1,11 +1,15 @@
-A simple consumer of ApiProducer output.
+A simple consumer of api_producer output.
 
-$client = new ApiConsumer();
+Sample usage:
 
-$details = $client->details('v1/some/path.php', array(
-	'post' => array('foo' => 'bar')
-);
+ include 'api_consumer/v2/classes/consumer.php';
 
-if(!is_array($details)) {
-	echo $client->message() . "\n";
-}
+ $client = new APIConsumerV2($options);
+
+ $details = $client->getDetails('v1/some/path.php', array(
+	 'post' => array('foo' => 'bar')
+ );
+
+ if(!is_array($details)) {
+	 echo $client->getMessage() . "\n";
+ }
