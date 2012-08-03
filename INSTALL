@@ -1,0 +1,9 @@
+api_consumer requires the following:
+
+* PHP (tested with 5.3)
+  * curl
+  * json
+* A webserver (tested with Apache 2.2)
+
+Copy the files in php/ to <php include path>/api_consumer/. E.g.:
+  cp -R php /usr/local/include/php/api_consumer
